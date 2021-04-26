@@ -7,6 +7,9 @@
     <title>Document</title>
 </head>
 <body>
+    <h1 class="pp">这是类名选择器</h1>
+    <h1 id="p1">这是ID选择器</h1>
+    <h1>这是标签名选择器</h1>
     <script>
      function $(param){
         var obj=null;
@@ -17,16 +20,12 @@
         }else{
             obj= document.querySelectorAll(param)
         }
-
-
-        obj.onn=function(event,fn){
-            obj.addEventListener(event,fn)
-            
-        }
         return obj;
     }
-          
-        
+    console.log($("#p1"));    
+    console.log($(".pp")); 
+    console.log($("h1"));
+    
         </script>
 </body>
 </html>
