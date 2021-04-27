@@ -11,55 +11,70 @@
 <body>
     <script>
         var arr = [11, 22, 22, 55, 66, 11, 88, 66, 77, 66]
-       
+
         //○ 找出元素 66 在数组中的位置
-        arr.forEach(function (v, k) {
-            if (v == 66) {
-                console.log(v, k);
-            }
-        })
-
-
+        // arr.forEach(function (v, k) {
+        //     if (v == 66) {
+        //         console.log(v, k);
+        //     }
+        // })
+        function getPos(arr, x) {
+            var pos = []
+            arr.forEach(function (v, k) {
+                if (v == x) {
+                    console.log("位置", k);
+                    pos.push(k)
+                }
+            })
+            return pos
+        }
+        console.log(getPos(arr, 66));
         //○ 计算数组中元素的和
         var sum = 0
         //1、 
-        arr.forEach(ele => {
-            sum += ele
-        })
-        console.log(sum);
+        // arr.forEach(ele => {
+        //     sum += ele
+        // })
+        // console.log(sum);
         //2、     
-        function sum(arr) {
-            return eval(arr.join("+"));
-        };
-        console.log(sum);
+        // function sum(arr) {
+        //     return eval(arr.join("+"));
+        // };
+        // console.log(sum);
+        //3、
+        arr.forEach(function(v){
+            sum += v         // sum = sum + v
+        })
+        console.log(sum)
         //○ 移除数组 arr 中的所有值等于 22 的元素，不要直接修改数组 arr，结果返回新的数组
-                    arr2 = []
-                arr.forEach(function(v,k) {
-                        if(v!==22){
-                            arr2.push(v)
-                        }
-                }) 
-                console.log(arr2);
-	//○ 移除数组 arr 中的所有值等于 22 的元素，直接在给定的 arr 数组上进行操作，并将结果返回。
-    function add (arr,item){
-        for(var i=0;i<arr.length;i++){
-           if(item==arr[i]){
-               arr.splice(i,1);
-            i--;
-           }
-            
+        arr2 = []
+        arr.forEach(function (v, k) {
+            if (v !== 22) {
+                arr2.push(v)
+            }
+        })
+        console.log(arr2);
+        //○ 移除数组 arr 中的所有值等于 22 的元素，直接在给定的 arr 数组上进行操作，并将结果返回。
+        function add(arr, item) {
+            for (var i = 0; i < arr.length; i++) {
+                if (item == arr[i]) {
+                    arr.splice(i, 1);
+                    i--;
+                }
+
+            }
+            return arr;
         }
-        return arr;
-    }
-    console.log(add(arr,22));
-    //○ 统计数组 arr 中值等于 66 的元素出现的次数
-    arr3 = []
-               arr.forEach(function(v,k) {
-                    if(v==66){
-                        arr3.push(v)
-                    }
-               }) 
-               console.log(arr3.length);
+        console.log(add(arr, 22));
+        //○ 统计数组 arr 中值等于 66 的元素出现的次数
+        arr3 = []
+        arr.forEach(function (v, k) {
+            if (v == 66) {
+                console.log("位置",k);
+                arr3.push(k)
+            }
+        })
+        console.log(arr3);
 
     </script>
 
