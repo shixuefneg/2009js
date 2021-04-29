@@ -1,57 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
 <body>
 
 
     <script>
 
-        function Ajax(param){
-            // console.log(param)
-            // 实例化 XHR
+        function ajax(obj) {
+            // 1实例化  XHR
             var xhr = new XMLHttpRequest()
 
-            //检测 readyState 状态
-            xhr.onreadystatechange = function (ev){
-                // console.log("readyState",xhr.readyState)
-                if(xhr.readyState==4 && xhr.status==200){
-                    //将服务器返回的json字符串转为 js对象
-                    var json_obj = JSON.parse(xhr.responseText)
-                    //调用success方法
-                    param.success(json_obj)
+            // 2 监听函数
+            xhr.onreadystatechange = function () {
+                //console.log(xhr.readyState)
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    //接收服务器返回的数据
+                    //console.log(typeof xhr.responseText)
+                    //console.log(xhr.responseText)
+                    var res = JSON.parse(xhr.responseText)
+
+                    // 请求成功后的处理函数
+                    obj.success(res)
 
                 }
             }
 
-            // 拼接url
-            var url_param = ""
-            for(var k in param.data)
-            {
-                url_param += k + "=" + param.data[k] + "&"
-            }
+            // 3 open
+            xhr.open(obj.method, obj.url)
 
-            // 打开链接  open
-            xhr.open(param.method,param.url + "?" + url_param)
-
-            // 发送请求  send
+            // 4 send
             xhr.send()
         }
 
 
 
-        Ajax({
+        ajax({
             url: "api.json",
             method: "get",
-            data:{name:"zhangsan",age:11},
-            success: function(res){     // res为服务器返回数据
-                //逻辑处理
-                console.log(res);
+            data: { name: "zhangsan", age: 11 },
+            success: function (res) {
+                console.log(res)
             }
         })
-
     </script>
 </body>
+
 </html>
