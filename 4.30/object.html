@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let name = "zhangsan"
+        let age = 11
+        let say = () => {return "Hello Es6"}
+
+//对象中直接使用变量
+let obj1 = {name,age,say}
+//等价于
+let obj1 = {
+    name : "zhangsan",
+    age:11,
+    say: function(){
+        return "Hellow Es6"
+    }
+}
+console.log(obj1.name);
+console.log(obj1.age);
+console.log(obj1.say);
+
+
+    </script>
+</body>
+</html>
