@@ -8,24 +8,23 @@
 </head>
 <body>
     <script>
-        let name = "zhangsan"
-        let age = 11
-        let say = () => {return "Hello Es6"}
+ const obj1 = {}
 
-//对象中直接使用变量
-let obj1 = {name,age,say}
-//等价于
-let obj1 = {
-    name : "zhangsan",
-    age:11,
-    say: function(){
-        return "Hellow Es6"
-    }
-}
-console.log(obj1.name);
-console.log(obj1.age);
-console.log(obj1.say);
+//对象常用的方法？
+console.log(Object.prototype)
 
+let p1 = Object.getPrototypeOf(obj1)
+let p2 = obj1.__proto__
+let p3 = Object.prototype
+
+console.log(p1==p2)
+console.log(p1==p3)
+
+
+
+
+
+        
 
     </script>
 </body>

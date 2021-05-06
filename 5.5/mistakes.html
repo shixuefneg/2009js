@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>错题</title>
+</head>
+
+<body>
+    <script>
+        function test() {
+            b()
+            var a = 1;
+            function b() {
+                console.log(1);
+                console.log(a);
+                var a = 2
+            }
+        }
+        test()
+        //输出结果1、undefined
+        sayHi()
+        function sayHi() {
+            console.log("Hi");
+        }
+        //输出结果Hi
+        function a() {
+            var user = "张三"
+            console.log(this.user);
+            console.log(this);
+        }
+        a()
+        //输出结果undefined window
+        function f() {
+            console.log(num);
+            var num = 1
+        }
+        f()
+        //输出结果undefined
+        function Foo() { };
+        var f1 = new Foo();
+        console.log(f1 instanceof Foo);
+        //输出结果true
+        // sayHi();
+        // var sayHi = function () {
+        //     console.log("Hi");
+        // }
+        function f() {
+            console.log(this);
+        }
+        f()
+        //window
+        var fun = function(){
+            console.log(1);
+        }
+        function fun (){
+            console.log(2);
+        }
+        fun()
+        //输出结果1
+        var b ;
+        function fun(){
+            b="change"
+
+        }
+        console.log(b);
+        fun()
+        console.log(b);
+        //结果undefined,change
+        var num = 1
+        function f(){
+            var num =2 
+            return num
+
+        }
+        console.log(f());
+        //结果2
+
+        var a = {'x':0}
+        var b =a 
+        a.x=1
+        console.log(b.x);
+        //结果是1
+    </script>
+</body>
+
+</html>
