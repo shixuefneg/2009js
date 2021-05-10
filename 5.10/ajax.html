@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../jquery.js"></script>
+</head>
+
+<body>
+    <script>
+        let pass = []
+        new Promise(function (resolve, reject) {
+            $.ajax({
+                url: "http://vue.api.comcto.com/api/password1.php",
+                method: "get",
+                success: function (res) {
+                    console.log("第一位密码:", res);
+                    pass.push(res)
+                    resolve(pass)
+                }
+            })
+        }).then(function (a) {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: "http://vue.api.comcto.com/api/password2.php",
+                    method: "get",
+                    success: function (res) {
+                        console.log("第二位密码:", res);
+                        pass.push(res)
+                        resolve(pass)
+                    }
+                })
+            })
+        }).then(function (a) {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: "http://vue.api.comcto.com/api/password3.php",
+                    method: "get",
+                    success: function (res) {
+                        console.log("第三位密码:", res);
+                        pass.push(res)
+                        resolve(pass)
+                    }
+                })
+            })
+        }).then(function (a) {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: "http://vue.api.comcto.com/api/password4.php",
+                    method: "get",
+                    success: function (res) {
+                        console.log("第四位密码:", res);
+                        pass.push(res)
+                        resolve(pass)
+                    }
+                })
+            })
+        }).then(function (a){
+            console.log("mima",a);
+        })
+
+
+    </script>
+</body>
+
+</html>
