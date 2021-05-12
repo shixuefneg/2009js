@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .container {
+    width: 530px;
+    height: 700px;
+    margin: auto;
+    /* background-color: yellow; */
+    text-align: center;
+	}
+	
+	.form {
+	    padding: 5px 0 10px;
+	    border-bottom: 1px solid black;
+	    background-color: rgb(243, 220, 171);
+	}
+	
+	table {
+	    width: 100%;
+	    border-collapse: collapse;
+	    line-height: 35px;
+	}
+	
+	thead {
+	    background-color: rgb(243, 220, 171);
+	}
+	
+	tbody {
+	    border-left: 1px dashed rgb(243, 220, 171);
+	    border-top: 1px dashed rgb(243, 220, 171);
+	}
+	
+	td {
+	    height: 35px;
+	    border-right: 1px dashed rgb(243, 220, 171);
+	    border-bottom: 1px dashed rgb(243, 220, 171);
+	}
+	
+	a {
+	    text-decoration: none;
+	    color: #333;
+	}
+	
+	a:hover {
+	    color: red;
+	}
+	
+	
+	/* button {
+	height: 22px;
+	line-height: 22px;
+	} */
+	
+	button:hover {
+	    cursor: pointer;
+	}
+	
+	input {
+	    outline-style: none;
+	}
+    </style>
+    <div class="container" id="app">
+        <div class="header">
+            <h2>图书管理</h2>
+            <div class="form">
+                <label for="bookId"> 编号：</label>
+                <input type="text" id="bookId" v-model.trim="id" v-focus :disabled="flag">
+                <label for="bookName"> &nbsp;&nbsp;&nbsp;名称：</label>
+                <input type="text" id="bookName" v-model.trim="name">
+                <button @click="submit" :disabled='!isFull'>提交</button>
+            </div>
+            <div class="total">
+                <span>图书总数： </span>
+                <span>{{total}}</span>
+                <button @click="booksSort(-1)">降序</button>
+                <button @click="booksSort(1)">升序</button>                
+            </div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>名称</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 由于只是结构所以就只写一行了 -->
+                <tr :key="item.id" v-for="item in books" v-cloak>
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{ item.date | dateFormat('yyyy-MM-dd hh:mm') }}</td>
+                    <td>
+                        <a href="#" @click.prevent="modify(item)">修改</a>
+                        <span>|</span>
+                        <a href="#" @click.prevent="del(item.id)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+         var vm = new Vue({
+        el: '#app',
+        data: {
+            id: '',
+            name: '',
+            flag: false,
+            isExist: false,
+            isFull: false,
+            books: []
+        },
+        methods: {
+            submit: function() {
+                if (this.flag) {
+                    var index = this.books.findIndex((item) => {
+                        return this.id == item.id;
+                    });
+                    // console.log(index);
+                    // 防止修改名称为其他书籍名称
+                    if (this.isExist && this.books[index].name != this.name) {
+                        return alert('书籍重名，无法修改');
+
+                    }
+                    // 要深刻理解使用数组索引的方式更新数组数据不是响应式的问题
+                    this.books[index].name = this.name;
+                    this.id = '';
+                    this.name = '';
+                    this.flag = false;
+
+                } else {
+                    // 图书添加功能
+                    if (this.isExist) {
+                        return alert('图书已存在不能重复添加');
+
+                    }
+                    // 这里需要使用箭头函数否则里面的this指向的就不再是vm
+                    var flag = this.books.some((item) => {
+                        // console.log(this);
+                        return item.id == this.id;
+
+                    })
+                    if (flag) {
+                        return alert('该图书 id 已被占用请重新编辑');
+                    }
+                    var book = {};
+                    book.id = this.id;
+                    book.name = this.name;
+                    book.date = +new Date();
+                    this.books.push(book);
+                    this.id = '';
+                    this.name = ''
+                }
+            },
+            modify: function(item) {
+                this.flag = true;
+                this.id = item.id;
+                this.name = item.name
+            },
+            del: function(id) {
+                // 删除图书
+                // 根据id从数组中查找元素的索引
+                // var index = this.books.findIndex(function(item){
+                //   return item.id == id;
+                // });
+                // 根据索引删除数组元素
+                // this.books.splice(index, 1);
+                // -------------------------
+                // 方法二：通过filter方法进行删除
+
+                this.books = this.books.filter(function(item) {
+                    return item.id != id;
+                });
+            },
+            booksSort: function(flag) {
+                this.books = this.books.sort((a, b) => {
+                    if (flag == -1) return b.id - a.id;
+                    if (flag == 1) return a.id - b.id;
+                })
+
+            }
+        },
+        // 监听name和id的侦听器
+        watch: {
+            name: function(val) {
+                // 数据完整时将isFull设置为true,默认为false
+                this.isFull = this.id && this.name;
+                // 如果书籍名称已经存在则将isExist设置为true
+                this.isExist = this.books.some(function(item) {
+                    return item.name == val;
+                });
+            },
+            id: function(val) {
+                this.isFull = this.id && this.name;
+            }
+        },
+        mounted: function() {
+            this.books = [{
+                id: '1',
+                name: '三国演义',
+                date: 1619776363317
+            }]
+        },
+        directives: {
+            focus: {
+                // 指令定义
+                inserted: function(el) {
+                    el.focus();
+                }
+            }
+        },
+        filters: {
+            // 用于格式化时间数据的过滤器
+            dateFormat: function(date, format) {
+                if (typeof date === "string") {
+                    var mts = date.match(/(\/Date\((\d+)\)\/)/);
+                    if (mts && mts.length >= 3) {
+                        date = parseInt(mts[2]);
+                    }
+                }
+                date = new Date(date);
+                if (!date || date.toUTCString() == "Invalid Date") {
+                    return "";
+                }
+                var map = {
+                    "M": date.getMonth() + 1, //月份 
+                    "d": date.getDate(), //日 
+                    "h": date.getHours(), //小时 
+                    "m": date.getMinutes(), //分 
+                    "s": date.getSeconds(), //秒 
+                    "q": Math.floor((date.getMonth() + 3) / 3), //季度 
+                    "S": date.getMilliseconds() //毫秒 
+                };
+                format = format.toString().replace(/([yMdhmsqS])+/g, function(all, t) {
+                    var v = map[t];
+                    if (v !== undefined) {
+                        if (all.length > 1) {
+                            v = '0' + v;
+                            v = v.substr(v.length - 2);
+                        }
+                        return v;
+                    } else if (t === 'y') {
+                        return (date.getFullYear() + '').substr(4 - all.length);
+                    }
+                    return all;
+                });
+                return format;
+            }
+        },
+        computed: {
+            total: function() {
+                return this.books.length ? this.books.length : '0';
+            }
+        }
+    })
+    </script>
+</body>
+</html>

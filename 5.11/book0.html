@@ -32,6 +32,7 @@
   </style>
 </head>
 <body>
+  
   <div id="app">
     <div class="grid">
       <div>
@@ -82,21 +83,28 @@
           },
           methods:{
             btn(){
-        
-              let obj={};
-              obj.id=this.a;
-              obj.name=this.b;
-              let now=new Date();
-                let y=now.getFullYear();  //获取年
-                // console.log(y)
-                let m=now.getMonth(); //获取月
-                // console.log(m)
-                let d = now.getDate() //获取日
-                // console.log(d)
-                let ymd=`${y}-${m+1}-${d}`;
-                // console.log(ymd)
-                obj.time=ymd
-                this.list.push(obj)
+              //第一种（死的）
+              let obj = {
+                id:this.a,
+                name:this.b,
+                time:"2021-5-12"
+              }
+              this.list.push(obj)
+              //第二种（活得）
+              // let obj={};
+              // obj.id=this.a;
+              // obj.name=this.b;
+              // let now=new Date();
+              //   let y=now.getFullYear();  //获取年
+              //   // console.log(y)
+              //   let m=now.getMonth(); //获取月
+              //   // console.log(m)
+              //   let d = now.getDate() //获取日
+              //   // console.log(d)
+              //   let ymd=`${y}-${m+1}-${d}`;
+              //   // console.log(ymd)
+              //   obj.time=ymd
+                // this.list.push(obj)
             },
             del(i){
               this.list.splice(i,1)
