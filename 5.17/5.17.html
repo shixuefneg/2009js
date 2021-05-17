@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+   .pcolor {
+        color: red
+    }
+    .psize {
+        font-size:30px
+    }
+
+</style>
+<body>
+    <div id="app">
+       <p v-bind:class="{pcolor:pc,psize:ps}">Hello</p> 
+    
+    <button v-on:click="chanegeColor">改变颜色</button>
+    <button v-on:click="chanegeSize">改变字体</button>
+    <button-t></button-t>
+</div>
+    <script src="../vue.min.js"></script>
+    <script>
+      
+    Vue.component("button-t", {
+        data: function () {
+            return {
+                count: 0,
+                all: 1234
+            }
+        },
+        template: `<div>
+            <button  v-on:click='count1'>You clicked me {{ count }} times.</button><h2>{{all}}</h2>
+            </div>`,
+        methods: {
+            count1() {
+                this.count++
+            }
+        }
+    })
+
+      
+      
+      
+      
+      new Vue({
+            el:"#app",
+            data:{
+                pc:true,    // pcolor:pc 中的pc  true表示应用样式
+	        	ps:true,    // psize:ps 中的ps  false不使用样式
+
+            },
+            methods:{
+                chanegeColor(){
+                    this.pc = !this.pc
+
+                },
+                chanegeSize(){
+                    this.ps = !this.ps
+
+                }
+            },
+            computed:{},
+            watch:{},
+        })
+    </script>
+</body>
+
+</html>
